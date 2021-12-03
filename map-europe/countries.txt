@@ -1,0 +1,1 @@
+ogr2ogr -where "id in ('PT','ES','FR','UK','IE','IT','CH','BE','NL','LU','DE','GE','AM','AT','CZ','PL','SK','HU','SL','HR','BA','RS','RO','BG','MK','ME','AL','EL','TR','MD','UA','BY','LT','LV','EE','FI','SE','NO','RU','DK','CY','SI')" countries.geojson data.geojson
