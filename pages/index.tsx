@@ -23,8 +23,12 @@ export default function Home({ map, population }) {
   );
 }
 export async function getStaticProps() {
-  const map = await d3.json('http://localhost:3000/countries.geojson');
-  const population = await d3.csv('http://localhost:3000/population.csv');
+  const map = await d3.json(
+    'https://github.com/Elfandreis/eu-budget/blob/main/public/countries.geojson'
+  );
+  const population = await d3.csv(
+    'https://github.com/Elfandreis/eu-budget/blob/main/public/population.csv'
+  );
   return {
     props: { map, population }, // will be passed to the page component as props
   };
