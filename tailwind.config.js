@@ -1,5 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
-
+const {fontFamily} = require('tailwindcss/defaultTheme');
 module.exports = {
   mode:'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
@@ -40,7 +40,7 @@ module.exports = {
         
       },
       fontFamily: {
-        sans: ['Poppins', ...defaultTheme.fontFamily.sans]
+        sans: ['League Spartan Variable', ...fontFamily.sans],
       }
     },
   },

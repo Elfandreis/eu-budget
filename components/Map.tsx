@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import * as d3 from 'd3';
 
-const Map = ({ map, population }) => {
+const Map = ({map, population, country, setCountry}) => {
   const svgRef = React.useRef(null);
   const euCountries = [
     'PT',
@@ -21,7 +21,7 @@ const Map = ({ map, population }) => {
     'HR',
     'RO',
     'BG',
-    'EL',
+    'GR',
     'LT',
     'LV',
     'EE',
@@ -33,11 +33,12 @@ const Map = ({ map, population }) => {
   ];
   useEffect(() => {
     draw();
-  }, [map, population]);
+  }, []);
 
   const draw = () => {
     const w = 960;
-    const h = 960;
+    const h = 700;
+    console.log(map);
 
     const colorScale = d3
       .scaleLinear()
@@ -54,43 +55,50 @@ const Map = ({ map, population }) => {
       .select(svgRef.current)
       .attr('viewBox', '0 0 ' + w + ' ' + h)
       .classed('svg-content', true);
+    const g = svg.append('g');
     const projection = d3
       .geoOrthographic()
-      .center([13, 40]) //comment centrer la carte, longitude, latitude
-      .translate([w / 2, h / 2]) // centrer l'image obtenue dans le svg
-      .scale([1500])
+      .center([12, 40])
+      .translate([w / 2, h / 2])
+      .scale([1600])
       .rotate([0, -10, 0]);
-    const graticule = d3.geoGraticule().step([10, 10]);
+
     const path = d3.geoPath().projection(projection);
-    Promise.all([map, population]).then((values) => {
-      svg
-        .append('path')
-        .datum(graticule)
-        .attr('class', 'graticule')
-        .attr('d', path)
-        .style('fill', '#fff')
-        .style('stroke', '#ccc');
-      svg
-        .selectAll('path')
+    const pop = d3.csvParse(population);
+    const graticule = d3.geoGraticule().step([5, 5]);
+    g.append('path')
+      .attr('class', 'text-gray-500 fill-current	')
+      .attr('d', path({type: 'Sphere'}));
+    g.append('path')
+      .datum(graticule)
+      .attr('class', 'graticule')
+      .attr('d', path)
+      .style('fill', 'none')
+      .style('stroke', '#ccc');
+    Promise.all([map, pop]).then((values) => {
+      g.selectAll('.country')
         .data(values[0].features)
         .enter()
         .append('path')
         .attr(
           'class',
-          'stroke-2 stroke-countries hover:fill-current hover:text-gray-200 transition-colors	'
+          'stroke-2 stroke-countries hover:fill-current hover:text-gray-200 transition-colors'
         )
         .attr('fill', function (d) {
           return euCountries.includes(d.id)
             ? colorScale(values[1].find((c) => c.id === d.id).population)
             : colorScale(0);
         })
-        .attr('d', path);
+        .attr('d', path)
+        .on('click', function (e, d) {
+          setCountry(d.id.toLowerCase());
+        });
     });
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-full max-w-2xl">
-      <svg ref={svgRef}></svg>
+      <svg ref={svgRef} />
     </div>
   );
 };
