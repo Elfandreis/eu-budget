@@ -11,7 +11,7 @@ export default function Document() {
         type="font/woff2"
         crossOrigin="anonymous"
       />
-      <body>
+      <body className="bg-gray-50">
         <Main />
         <NextScript />
       </body>

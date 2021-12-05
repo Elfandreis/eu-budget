@@ -1,17 +1,22 @@
 import Image from 'next/image';
 const Tooltip = ({country}) => {
   return (
-    <div>
+    <div className="flex flex-col items-start w-full p-4 bg-gray-100 md:w-64">
       {country && (
-        <div className="relative w-32 h-32">
-          <Image
-            src={`https://flagcdn.com/${country}.svg`}
-            layout="fill"
-            alt="flag"
-          />
-        </div>
+        <Image
+          src={`https://flagcdn.com/w160/${country}.webp`}
+          width="160"
+          height="120"
+          objectFit="contain"
+          alt="flag"
+        />
       )}
-      <h2>Country-stat</h2>
+      <div className="flex flex-col">
+        <h2 className="mt-2 mb-4 text-xl font-semibold">Country stats</h2>
+        <p className="mb-1">Population:</p>
+        <p className="mb-1">Population:</p>
+        <p className="mb-1">Population:</p>
+      </div>
     </div>
   );
 };

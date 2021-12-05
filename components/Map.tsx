@@ -38,7 +38,6 @@ const Map = ({map, population, country, setCountry}) => {
   const draw = () => {
     const w = 960;
     const h = 700;
-    console.log(map);
 
     const colorScale = d3
       .scaleLinear()
@@ -67,7 +66,7 @@ const Map = ({map, population, country, setCountry}) => {
     const pop = d3.csvParse(population);
     const graticule = d3.geoGraticule().step([5, 5]);
     g.append('path')
-      .attr('class', 'text-gray-500 fill-current	')
+      .attr('class', 'text-gray-50 fill-current	')
       .attr('d', path({type: 'Sphere'}));
     g.append('path')
       .datum(graticule)
@@ -91,13 +90,14 @@ const Map = ({map, population, country, setCountry}) => {
         })
         .attr('d', path)
         .on('click', function (e, d) {
+          console.log(d);
           setCountry(d.id.toLowerCase());
         });
     });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full max-w-2xl">
+    <div className="flex flex-col items-center justify-center w-full h-full ">
       <svg ref={svgRef} />
     </div>
   );
