@@ -6,9 +6,12 @@ import Tooltip from '../components/Tooltip';
 
 import Image from 'next/image';
 import CardObjective from '../components/CardObjective';
+
+import * as d3 from 'd3';
+
 export default function Home({map, population}) {
   const [country, setCountry] = useState('');
-
+  const data = d3.csvParse(population);
   return (
     <>
       <div className="mx-auto ">
@@ -110,7 +113,7 @@ export default function Home({map, population}) {
                 setCountry={setCountry}
                 country={country}
               />
-              <Tooltip country={country} />
+              <Tooltip data={data} country={country} />
             </div>
           </div>
         </div>
@@ -128,6 +131,7 @@ export async function getStaticProps() {
     );
     const map = resM.data;
     const population = resP.data;
+
     return {
       props: {map, population}, // will be passed to the page component as props
     };

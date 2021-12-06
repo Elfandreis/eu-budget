@@ -41,7 +41,7 @@ const Map = ({map, population, country, setCountry}) => {
 
     const colorScale = d3
       .scaleLinear()
-      .domain([1, 500, 5000, 10000, 30000, 50000, 83000])
+      .domain([1, 500000, 5000000, 10000000, 30000000, 50000000, 83000000])
       .range([
         '#bdc3c7',
         '#6196FF',
@@ -90,8 +90,7 @@ const Map = ({map, population, country, setCountry}) => {
         })
         .attr('d', path)
         .on('click', function (e, d) {
-          console.log(d);
-          setCountry(d.id.toLowerCase());
+          return euCountries.includes(d.id) && setCountry(d.id.toLowerCase());
         });
     });
   };
