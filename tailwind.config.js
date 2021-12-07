@@ -6,9 +6,10 @@ module.exports = {
 
   darkMode: false, // or 'media' or 'class'
   theme: {
-    stroke:theme=>({
-        "countries":"white"
-    }),
+    stroke:{
+      current: 'currentColor',
+      "countries":"white"
+    },
     extend: {
       colors:{
         yellow: {

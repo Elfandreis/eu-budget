@@ -1,11 +1,18 @@
-const CardObjective = ({title, value}) => {
+import {motion} from 'framer-motion';
+
+const CardObjective = ({objective, setSelected}) => {
   return (
-    <div className="relative flex flex-col justify-end w-full h-56 p-3 bg-blue-200">
+    <motion.div
+      layoutId={objective.title + 'id'}
+      onClick={() => setSelected(objective)}
+      className="relative flex flex-col justify-end w-full h-56 p-3 rounded-lg"
+      style={{backgroundColor: objective.color}}
+    >
       <h2 className="bottom-0 left-0 font-semibold text-white uppercase opacity-70">
-        {title}
+        {objective.title}
       </h2>
-      <h1 className="font-bold text-white ">{value}</h1>
-    </div>
+      <h2 className="font-bold text-white ">{objective.value}</h2>
+    </motion.div>
   );
 };
 
