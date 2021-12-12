@@ -1,7 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react';
 import * as d3 from 'd3';
+import type {FeatureCollection, Feature, Geometry} from 'geojson';
 
-const Map = ({map, population, country, setCountry}) => {
+type Props = {
+  title: string;
+  children: JSX.Element;
+};
+
+const Map = ({
+  map,
+  population,
+  country,
+  setCountry,
+}: {
+  map: FeatureCollection;
+  population: string;
+  country: string;
+  setCountry: (value: string) => void;
+}) => {
   const svgRef = React.useRef(null);
   const euCountries = [
     'PT',
@@ -40,7 +56,7 @@ const Map = ({map, population, country, setCountry}) => {
     const h = 700;
 
     const colorScale = d3
-      .scaleLinear()
+      .scaleLinear<string, number>()
       .domain([1, 500000, 5000000, 10000000, 30000000, 50000000, 83000000])
       .range([
         '#bdc3c7',
@@ -59,7 +75,7 @@ const Map = ({map, population, country, setCountry}) => {
       .geoOrthographic()
       .center([12, 40])
       .translate([w / 2, h / 2])
-      .scale([1600])
+      .scale(1600)
       .rotate([0, -10, 0]);
 
     const path = d3.geoPath().projection(projection);
@@ -83,14 +99,20 @@ const Map = ({map, population, country, setCountry}) => {
           'class',
           'stroke-2 stroke-countries hover:fill-current hover:text-gray-200 transition-colors'
         )
-        .attr('fill', function (d) {
-          return euCountries.includes(d.id)
-            ? colorScale(values[1].find((c) => c.id === d.id).population)
+        .attr('fill', function (d: Feature) {
+          let id = d.id as string;
+          return euCountries.includes(id)
+            ? colorScale(
+                Number(
+                  values[1].find((c) => c.id === d.id.toString()).population
+                )
+              )
             : colorScale(0);
         })
         .attr('d', path)
-        .on('click', function (e, d) {
-          return euCountries.includes(d.id) && setCountry(d.id.toLowerCase());
+        .on('click', function (e, d: Feature) {
+          let id = d.id as string;
+          return euCountries.includes(id) && setCountry(id.toLowerCase());
         });
     });
   };

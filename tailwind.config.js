@@ -13,7 +13,7 @@ module.exports = {
     extend: {
       colors:{
         yellow: {
-          DEFAULT: '#003399',
+          DEFAULT: '#FFCC00',
           '50': '#FFF1B8',
           '100': '#FFEDA3',
           '200': '#FFE47A',

@@ -1,42 +1,49 @@
 import * as React from 'react';
+import {motion, useTransform, useViewportScroll} from 'framer-motion';
 
-const SvgComponent = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    viewBox="0 0 27 18"
-    {...props}
-  >
-    <defs>
-      <g id="c">
-        <g id="b">
-          <path id="a" d="M0 0v1h.5z" transform="rotate(18 3.157 -.5)" />
-          <use xlinkHref="#a" transform="scale(-1 1)" />
-        </g>
-        <use xlinkHref="#b" transform="rotate(72)" />
-        <use xlinkHref="#b" transform="rotate(144)" />
-        <use xlinkHref="#b" transform="rotate(216)" />
-        <use xlinkHref="#b" transform="rotate(288)" />
-      </g>
-    </defs>
-    <path
-      d="M0 0v18h27V0z"
-      fill="#039"
-      className="text-transparent fill-current"
-    />
-    <g transform="translate(13.5 9)" fill="#fc0">
-      <use xlinkHref="#c" transform="translate(0 -6)" />
-      <g id="d">
-        <use xlinkHref="#c" transform="rotate(72 -5.076 .534)" />
-        <use xlinkHref="#c" transform="rotate(72 -4.663 -2.076)" />
-        <use xlinkHref="#c" transform="translate(6)" />
-        <use xlinkHref="#c" transform="rotate(144 -2.11 -2.344)" />
-        <use xlinkHref="#c" transform="rotate(-144 -2.344 -2.11)" />
-      </g>
-      <use xlinkHref="#c" transform="translate(0 6)" />
-      <use xlinkHref="#d" transform="scale(-1 1)" />
-    </g>
-  </svg>
-);
-
+const SvgComponent = (props) => {
+  const {scrollY} = useViewportScroll();
+  return (
+    <svg viewBox="0 0 1000 500" className="flex items-center justify-center">
+      <motion.g
+        initial={{x: 500, y: 250}}
+        style={{
+          x: useTransform(scrollY, [0, 200], [500, 0]),
+          y: useTransform(scrollY, [0, 200], [250, 490]),
+        }}
+      >
+        {[...Array(12)].map((_, i) => {
+          return (
+            <motion.path
+              layoutId={i.toString()}
+              initial={{
+                x: 0 + 135 * Math.cos((2 * Math.PI * i) / 12),
+                y: 0 + 135 * Math.sin((2 * Math.PI * i) / 12),
+              }}
+              style={{
+                x: useTransform(
+                  scrollY,
+                  [0, 200],
+                  [135 * Math.cos((2 * Math.PI * i) / 12), i * 83 + 36]
+                ),
+                y: useTransform(
+                  scrollY,
+                  [0, 200],
+                  [135 * Math.sin((2 * Math.PI * i) / 12), 0]
+                ),
+                color: useTransform(
+                  scrollY,
+                  [0, 100, 200],
+                  ['#FFCC00', '#003399', '#000']
+                ),
+              }}
+              key={i}
+              d="m11.68 11.12-13.81-10.36-14.41 10.29 5.59-16.33-14.23-10.53 17.25.27 5.61-16.79 5.09 16.49 17.7.15-14.12 9.93 5.33 16.88z"
+            />
+          );
+        })}
+      </motion.g>
+    </svg>
+  );
+};
 export default SvgComponent;

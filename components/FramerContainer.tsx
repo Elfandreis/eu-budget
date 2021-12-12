@@ -23,7 +23,7 @@ const FramerContainer = ({selected, setSelected}) => {
       {selected && (
         <>
           <motion.div
-            className="absolute w-full h-full backdrop-grayscale backdrop-blur-sm"
+            className="absolute w-full h-full backdrop-grayscale backdrop-blur-sm pointer-events-none"
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             exit={{opacity: 0}}
@@ -33,22 +33,27 @@ const FramerContainer = ({selected, setSelected}) => {
             key={selected.title}
             layoutId={selected.title + 'id'}
             onClick={() => setSelected(null)}
-            className="absolute inset-0 flex flex-col w-64 h-64 p-3 m-auto rounded-lg "
+            transition={{ease: 'easeInOut', duration: 0.3}}
+            className="absolute inset-0 flex flex-col justify-center h-64 gap-1 p-4 m-auto w-72 rounded-xl "
             style={{backgroundColor: selected.color}}
           >
-            <motion.div className="flex items-center w-full h-32 text-gray-200 text-7xl">
+            <motion.div
+              layoutId={selected.title + 'expand'}
+              className="flex items-center w-full h-20 gap-3 p-4 mb-2 text-gray-200 bg-gray-100 rounded-xl bg-opacity-20 text-7xl"
+            >
               {icon}
-              <motion.h2 className="text-2xl font-bold text-gradient bg-gradient-to-r from-gray-100 to-gray-300">
+              <motion.h2 className="text-2xl font-bold text-center text-gradient bg-gradient-to-r from-gray-100 to-gray-300">
                 {selected.value}
               </motion.h2>
             </motion.div>
-
-            {selected.options.map((option, i) => (
+            {selected.options.map((option) => (
               <motion.div
                 key={option}
-                className="flex flex-row items-center gap-3"
+                className="flex flex-row items-center gap-3 "
               >
-                <div className={'text-gray-100'}>{optionIcon}</div>
+                <motion.figure className="text-gray-100">
+                  {optionIcon}
+                </motion.figure>
                 <motion.h3 className="text-sm font-semibold text-white opacity-70">
                   {option}
                 </motion.h3>

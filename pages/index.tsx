@@ -12,32 +12,24 @@ import * as d3 from 'd3';
 
 import {objectives} from '../utils/data';
 import FramerContainer from '../components/FramerContainer';
+import Donut from '../components/Donut';
 
-interface ObjectiveCard {
-  title: string;
-  value: number;
-  color: string;
-  icon: string;
-}
 export default function Home({map, population}) {
   const [country, setCountry] = useState('');
-  const [selectedCard, setSelectedCard] = useState<ObjectiveCard>(null);
-
+  const [selectedCard, setSelectedCard] = useState(null);
   const data = d3.csvParse(population);
   return (
     <>
       <div className="w-full h-3 bg-gradient-to-r from-blue-500 via-blue-200 to-red-500" />
-      <div className="max-w-3xl px-8 mx-auto">
-        <div className="relative flex flex-col items-center justify-center pb-3 mt-6 mb-8 border-b-2 border-gray-300">
-          <div className="w-64 text-yellow-500 fill-current ">
+      <div className="max-w-3xl px-6 mx-auto">
+        <div className="relative flex flex-col items-center justify-center pb-3 mt-8 mb-5 border-b-2 border-gray-300">
+          <div className="w-full text-yellow-500 fill-current">
             <SvgComponent />
           </div>
         </div>
-
-        <h1 className="bottom-0 mt-4 mb-4 text-3xl font-bold tracking-tight md:text-5xl">
+        <h1 className="bottom-0 mt-4 mb-4 text-3xl font-bold tracking-tight uppercase md:text-5xl">
           Bugetul Uniunii Europene şi Pachetul de Redresare
         </h1>
-
         <div className="flex flex-row items-center gap-3 mt-4 mb-12">
           <div className="relative w-8 h-8 ">
             <Image src="/avatar.webp" layout="fill" className="rounded-full" />
@@ -56,10 +48,10 @@ export default function Home({map, population}) {
             și limitele de cheltuieli ale UE. CFM-ul actual acoperă perioada
             2021-2027.
           </p>
-          <h1 className="mt-4 mb-4 text-3xl font-semibold text-center md:text-5xl text-gradient bg-gradient-to-r from-blue-300 to-blue-600">
-            1 074,3 miliarde €
+          <h1 className="mt-4 mb-4 text-3xl font-bold text-center md:text-5xl text-gradient bg-gradient-to-r from-blue-300 to-blue-600">
+            1.211 trilioane €
           </h1>
-          <div className="relative grid grid-cols-2 grid-rows-3 gap-2 p-2 mt-4 mb-4 md:grid-cols-4 md:grid-rows-2">
+          <div className="relative grid grid-cols-2 grid-rows-3 gap-2 p-2 mt-4 mb-4 -mx-6 overflow-hidden md:mx-0 md:grid-cols-4 md:grid-rows-2">
             {objectives.map((objective) => (
               <CardObjective
                 key={objective.title}
@@ -72,7 +64,6 @@ export default function Home({map, population}) {
               setSelected={setSelectedCard}
             />
           </div>
-
           <p className="mt-4 mb-4">
             <span className="font-bold ">Next Generation EU: </span>este un
             pachet de redresare economica adoptat in conditii exceptionale de
@@ -86,8 +77,9 @@ export default function Home({map, population}) {
             Acesta va actiona ca un instrument suplimentar bugetului UE in
             perioada 2021-2023.
           </p>
-          <h1 className="mt-4 mb-4 text-3xl font-semibold text-center md:text-5xl text-gradient bg-gradient-to-r from-blue-300 to-blue-600">
-            750 miliarde €
+          <Donut />
+          <h1 className="mt-4 mb-4 text-3xl font-bold text-center md:text-5xl text-gradient bg-gradient-to-r from-blue-300 to-blue-600">
+            806 miliarde €
           </h1>
         </div>
 

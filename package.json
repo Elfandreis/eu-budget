@@ -7,6 +7,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@types/d3": "^7.1.0",
     "@types/d3-selection": "^3.0.1",
     "@types/geojson": "^7946.0.8",
     "@types/react-csv": "^1.1.2",
@@ -15,7 +16,6 @@
     "csv-loader": "^3.0.3",
     "csv-parse": "^5.0.3",
     "d3": "^7.1.1",
-    "d3-selection": "^3.0.0",
     "framer-motion": "^5.4.1",
     "json-loader": "^0.5.7",
     "next": "^12.0.4",

@@ -28,7 +28,7 @@ export const objectives = [
     value: '400,9 mld €',
     color: '#2d3436',
     options: [
-      'European Agricultural Guarantee Fund',
+      'Agricultural Guarantee Fund',
       'European Agricultural Fund for Rural Development',
       'Just Transition Fund ',
       'Programme for Environment and Climate Action',
