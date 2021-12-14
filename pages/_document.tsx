@@ -5,11 +5,8 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <link
-        rel="preload"
-        href="/fonts/league-spartan-var.woff2"
-        as="font"
-        type="font/woff2"
-        crossOrigin="anonymous"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
       />
       <body className="bg-gray-50">
         <Main />

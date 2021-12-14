@@ -13,7 +13,7 @@ const draw = {
 };
 import * as MaterialDesign from 'react-icons/md';
 
-const FramerContainer = ({selected, setSelected}) => {
+const SelectedCard = ({selected, setSelected}) => {
   const icon =
     selected !== null && React.createElement(MaterialDesign[selected.icon]);
   const optionIcon =
@@ -23,7 +23,7 @@ const FramerContainer = ({selected, setSelected}) => {
       {selected && (
         <>
           <motion.div
-            className="absolute w-full h-full backdrop-grayscale backdrop-blur-sm pointer-events-none"
+            className="absolute w-full h-full pointer-events-none backdrop-grayscale backdrop-blur-sm"
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             exit={{opacity: 0}}
@@ -34,7 +34,7 @@ const FramerContainer = ({selected, setSelected}) => {
             layoutId={selected.title + 'id'}
             onClick={() => setSelected(null)}
             transition={{ease: 'easeInOut', duration: 0.3}}
-            className="absolute inset-0 flex flex-col justify-center h-64 gap-1 p-4 m-auto w-72 rounded-xl "
+            className="absolute inset-0 flex flex-col h-64 gap-1 p-4 m-auto w-80 rounded-xl "
             style={{backgroundColor: selected.color}}
           >
             <motion.div
@@ -54,7 +54,7 @@ const FramerContainer = ({selected, setSelected}) => {
                 <motion.figure className="text-gray-100">
                   {optionIcon}
                 </motion.figure>
-                <motion.h3 className="text-sm font-semibold text-white opacity-70">
+                <motion.h3 className="text-sm  text-white opacity-80">
                   {option}
                 </motion.h3>
               </motion.div>
@@ -66,4 +66,4 @@ const FramerContainer = ({selected, setSelected}) => {
   );
 };
 
-export default FramerContainer;
+export default SelectedCard;

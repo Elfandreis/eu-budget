@@ -5,19 +5,17 @@ import {PieArcDatum} from 'd3-shape';
 const Donut = () => {
   const svgRef = useRef();
   useEffect(() => {
-    const width = 450;
-    const height = 450;
-    const margin = 40;
-
+    const width = 500;
+    const height = 500;
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-    const radius = Math.min(width, height) / 2 - margin;
+    const radius = Math.min(width, height) / 2;
 
     const svg = d3
       .select(svgRef.current)
-      .attr('width', width)
-      .attr('height', height)
+      .attr('viewBox', '0 0 ' + width + ' ' + height)
       .select('g')
       .attr('transform', `translate(${width / 2},${height / 2})`);
+
     svg.selectAll('*').remove();
     // Create dummy data
     interface Datum {
@@ -25,15 +23,15 @@ const Donut = () => {
       value: number;
     }
     const data = [
-      {label: 'a', value: 83},
-      {label: 'b', value: 338},
-      {label: 'b', value: 385},
+      {label: 'Contributions', value: 83},
+      {label: 'Grants', value: 338},
+      {label: 'Loans', value: 385},
     ];
     // set the color scale
     const color = d3
-      .scaleLinear<string, number>()
-      .domain([1, 806])
-      .range(['white', 'blue']);
+      .scaleOrdinal<{}, string>()
+      .domain(data)
+      .range(['#A3C2FF', '#0049DB', '#001847']);
 
     // Compute the position of each group on the pie:
     const pie = d3
@@ -62,45 +60,10 @@ const Donut = () => {
       .attr('d', arc)
       .attr('fill', (d) => color(d.data.value))
       .attr('stroke', 'white')
-      .style('stroke-width', '2px')
-      .style('opacity', 0.7);
-
-    // Add the polylines between chart and labels:
-    svg
-      .selectAll('allPolylines')
-      .data(data_ready)
-      .join('polyline')
-      .attr('stroke', 'black')
-      .style('fill', 'none')
-      .attr('stroke-width', 1)
-      .attr('points', function (d) {
-        const posA = arc.centroid(d); // line insertion in the slice
-        const posB = outerArc.centroid(d); // line break: we use the other arc generator that has been built only for that
-        const posC = outerArc.centroid(d); // Label position = almost the same as posB
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2; // we need the angle to see if the X position will be at the extreme right or extreme left
-        posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-        return [...posA, ...posB, ...posC];
-      });
-    // Add the polylines between chart and labels:
-    svg
-      .selectAll('allLabels')
-      .data(data_ready)
-      .join('text')
-      .text((d) => d.data.label)
-      .attr('transform', function (d) {
-        const pos = outerArc.centroid(d);
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-        pos[1] = -Math.abs(pos[1]);
-        return `translate(${pos})`;
-      })
-      .style('text-anchor', function (d) {
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        return midangle < Math.PI ? 'start' : 'end';
-      });
+      .style('stroke-width', '15px');
   }, []);
   return (
-    <div className="flex flex-col overflow-hidden items-center justify-center w-full h-full ">
+    <div className="flex flex-col items-center justify-center w-full h-full ">
       <svg ref={svgRef}>
         <g></g>
       </svg>
