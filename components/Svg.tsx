@@ -45,7 +45,7 @@ export const Stars = () => {
         }));
   }, [animate]);
   return (
-    <div className="w-full text-yellow-500 fill-current">
+    <div className="w-full text-yellow-500 fill-current bg-blue-500 rounded-xl ">
       <motion.svg viewBox="0 0 1000 500">
         <motion.g initial={{x: 500, y: 250}}>
           {[...Array(12)].map((_, i) => {

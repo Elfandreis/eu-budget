@@ -1,10 +1,11 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 const {fontFamily} = require('tailwindcss/defaultTheme');
+
 module.exports = {
   mode:'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
 
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false, 
   theme: {
     stroke:{
       current: 'currentColor',
@@ -37,8 +38,7 @@ module.exports = {
           '700': '#001847',
           '800': '#000A1F',
           '900': '#000000'
-        }
-        
+        },
       },
       fontFamily: {
         sans: ['Poppins', ...fontFamily.sans],
