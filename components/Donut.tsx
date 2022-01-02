@@ -83,8 +83,8 @@ export const DonutLabels = () => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 mt-8 md:flex-row">
-      <div className="relative flex flex-col items-center justify-center w-full sm:w-2/3 mb-4 md:w-1/2">
+    <div className="flex flex-col items-center justify-center gap-3 mt-6 md:flex-row">
+      <div className="relative flex flex-col items-center justify-center w-full mb-4 sm:w-2/3 md:w-1/2">
         <Donut>
           <h1 className="absolute flex-wrap text-2xl font-bold text-center md:text-3xl text-gradient bg-gradient-to-r from-blue-300 to-blue-600">
             €806.9 <br />

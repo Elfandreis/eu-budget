@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import {motion, useAnimation} from 'framer-motion';
-
 export const Stars = () => {
   const [animate, setAnimate] = useState(false);
   const controlsStar = useAnimation();
@@ -24,7 +23,6 @@ export const Stars = () => {
 
   useEffect(() => {
     const array = shuffleArray(items);
-
     animate
       ? controlsStar.start((i) => {
           const index = array.indexOf(i);
@@ -45,18 +43,16 @@ export const Stars = () => {
         }));
   }, [animate]);
   return (
-    <div className="w-full text-yellow-500 fill-current bg-blue-500 rounded-xl ">
+    <div className="relative w-full text-yellow-500 bg-blue-500 fill-current rounded-xl ">
       <motion.svg viewBox="0 0 1000 500">
-        <motion.g initial={{x: 500, y: 250}}>
+        <motion.g transform="translate(500,250)">
           {[...Array(12)].map((_, i) => {
             return (
               <motion.path
                 custom={i}
                 layoutId={i.toString()}
-                initial={{
-                  x: 0 + 140 * Math.cos((2 * Math.PI * i) / 12),
-                  y: 0 + 140 * Math.sin((2 * Math.PI * i) / 12),
-                }}
+                x={0 + 140 * Math.cos((2 * Math.PI * i) / 12)}
+                y={0 + 140 * Math.sin((2 * Math.PI * i) / 12)}
                 animate={controlsStar}
                 key={i}
                 transition={{ease: 'easeInOut', duration: 0.5}}

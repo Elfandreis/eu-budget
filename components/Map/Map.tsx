@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
-import type {FeatureCollection, Feature, Geometry} from 'geojson';
-import Tooltip from '../components/Tooltip';
-import {euCountries} from '../utils/data';
+import type {FeatureCollection, Feature} from 'geojson';
+import Tooltip from './Tooltip';
+import {euCountries} from '../../utils/data';
 type Props = {
   title: string;
   children: JSX.Element;
@@ -11,7 +11,7 @@ type Props = {
 const Map = ({map, csv}: {map: FeatureCollection; csv: string}) => {
   const svgRef = React.useRef(null);
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('EU');
 
   useEffect(() => {
     const draw = () => {
@@ -19,7 +19,7 @@ const Map = ({map, csv}: {map: FeatureCollection; csv: string}) => {
       const h = 700;
       const colorScale = d3
         .scaleLinear<string, number>()
-        .domain([1, 500000, 5000000, 10000000, 30000000, 50000000, 83000000])
+        .domain([0, 0.5, 5, 10, 30, 50, 83])
         .range([
           '#bdc3c7',
           '#6196FF',
@@ -101,9 +101,23 @@ const Map = ({map, csv}: {map: FeatureCollection; csv: string}) => {
     };
     draw();
   }, []);
+  useEffect(() => {
+    country === 'EU' &&
+      d3
+        .select(svgRef.current)
+        .select('#selected')
+        .attr('id', null)
+        .style('fill', null)
+        .style('stroke-width', '2px')
+        .style('stroke', 'white')
+        .attr(
+          'class',
+          'stroke-2 cursor-pointer stroke-countries hover:fill-current hover:text-gray-200 transition-all'
+        );
+  }, [country]);
   return (
-    <div className="relative flex flex-col w-full overflow-hidden ">
-      <div className="flex flex-col items-center justify-center w-full h-full rouded-xl">
+    <div className="relative flex flex-col w-full overflow-hidden">
+      <div className="flex flex-col items-center justify-center w-full h-full">
         <svg ref={svgRef}></svg>
       </div>
       <Tooltip data={data} country={country} setCountry={setCountry} />
